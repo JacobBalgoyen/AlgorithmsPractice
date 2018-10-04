@@ -1,0 +1,123 @@
+package com.jacobbalgoyen.practice;
+
+public class BST {
+	public Node root;
+	
+	public BST(){
+		Node root = new Node();
+	}
+
+	class Node{
+		public int val;
+		public Node right, left;
+		public Node(){
+			//Do Nothing
+		}
+	}
+	
+	public static Node insert(Node root, int val){
+		if(root == null){
+			root.val = val;
+			return root;
+		} else if(root.val == val){
+			System.out.println("Tree is empty");
+			return root;
+		} else if (val < root.val){
+			return root.left = insert(root, val);
+		} else {
+			return root.right = insert(root, val);
+		}
+	}
+	
+	public static Node search(Node root, int val){
+		if(root == null){
+			System.out.println("empty tree");
+			return null;
+		} else if (root.val == val){
+			return root;
+		} else if (val < root.val){
+			return search(root.left, val);
+		} else {
+			return search(root.right, val);
+		}
+	}
+	
+	public static void delete(Node root, int val){
+		if(root == null){
+			System.out.println("Tree is empty");
+		} else if(root.val == val){
+			root = null;
+		} else if((root.left).val == val){
+			deleteThisNode(root.left, root, 0);
+		} else{
+			deleteThisNode(root.right, root, 1);
+		}
+	}
+	
+	public static void deleteThisNode(Node node, Node parent, int lor){//lor=0 is left, lor=1 is right
+		if(node.left == null && node.right == null){
+			if(lor == 0){
+				parent.left = null;
+			} else{
+				parent.right = null;
+			}
+		} else if(node.left != null && node.right == null){
+			if(lor == 0){
+				parent.left = node.left;
+			} else{
+				parent.right = node.left;
+			}
+		} else if(node.left == null && node.right != null){
+			if(lor == 0){
+				parent.left = node.right;
+			} else{
+				parent.right = node.right;
+			}
+		} else{
+			int lowInRight = findLowestInRightSubtree(node);
+			node.val = lowInRight;
+		}
+	}
+	
+	public static int findLowestInRightSubtree(Node node){
+		Node current = node.right;
+		Node parent = node;
+		int val;
+		if(current.left == null){
+			val = current.val;
+			deleteThisNode(current, parent, 1);
+			return val;
+		} else{
+			while(current.left != null){
+				parent = current;
+				current = current.left;
+			}
+			val = current.val;
+			deleteThisNode(current, parent, 0);
+			return val;
+		}
+	}
+	
+	public static void printInOrder(Node root){
+		if(root.left == null && root.right == null){
+			System.out.print(root.val + " ");
+		}
+		printInOrder(root.left);
+		System.out.print(root.val + " ");
+		printInOrder(root.right);
+	}
+	
+	public static void traverseLeft(Node node){
+		
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		BST bst = new BST();
+		for(int i = 1; i <= 15; i++){
+			insert(bst.root, i);
+		}
+		printInOrder(bst.root);
+	}
+
+}

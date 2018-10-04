@@ -1,0 +1,89 @@
+package com.jacobbalgoyen.practice;
+
+import java.util.Arrays;
+
+public class OneDotOne {
+	
+	//Using extra data structure
+	public static boolean hasAllUnique(String str){
+		int[] charExists = new int[26];
+		for(int i = 0; i <str.length(); i++){
+			if(charExists[str.charAt(i) - 'a'] == 1){
+				System.out.println(str.charAt(i));
+				return false;
+			} else {
+				charExists[str.charAt(i) - 'a'] = 1;
+			}
+		}
+		return true;
+	}
+	
+	//In Place algorithm
+	public static boolean hasAllUniqueInPlace(char[] str){
+		quicksort(str, 0, str.length - 1);
+		printCharArray(str);
+		/*if(hasSameLettersAdj(sorted)){
+			return false;
+		} else {
+			return true;
+		}*/
+		return false; //TODO just for testing
+	}
+	
+	public static void printCharArray(char[] str){
+		for(int i = 0; i < str.length; i++){
+			System.out.print(str[i]);
+		}
+		System.out.println(" - quicksorted");
+	}
+	
+	public static boolean quicksort(char[] str, int low, int high){
+		//check for small input
+		if(high - low <= 1){
+			return true;
+		} else {
+			int wall = low;
+			int pi = high;
+			int pivotVal = str[pi];
+			while(low < high){
+				if(str[low] == pivotVal){
+					wall++;
+					low++;
+				} else if(str[low] > pivotVal){
+					low++;
+				} else {
+					switchWithWall(str, low, wall);
+					wall++;
+					low++;
+				}
+			}
+			switchWithWall(str, pi, wall);
+			quicksort(str, 0, pi - 1);
+			quicksort(str, pi + 1, high);
+		}
+		return false;
+	}
+
+	private static void switchWithWall(char[] str, int low, int wall) {
+		char temp = str[wall];
+		str[wall] = str[low];
+		str[low] = temp;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String str1 = "asndklfejfnlw";
+		String str2 = "";
+		String str3 = "alkkjhlkjdfjskdjfmjnjenjnefjklsdkrulkjdlfkjslfeknllsmdksdhrlal";
+		System.out.println(hasAllUnique(str1));
+		System.out.println(hasAllUnique(str2));
+		System.out.println(hasAllUnique(str3));
+		
+		//-------------------------------------------
+		
+		System.out.println(hasAllUniqueInPlace(str1.toCharArray()));
+		System.out.println(hasAllUniqueInPlace(str2.toCharArray()));
+		System.out.println(hasAllUniqueInPlace(str3.toCharArray()));
+	}
+
+}

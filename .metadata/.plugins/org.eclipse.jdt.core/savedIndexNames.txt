@@ -1,0 +1,16 @@
+INDEX VERSION 1.127+/home/jacob/Desktop/JavaPractice/.metadata/.plugins/org.eclipse.jdt.core
+1134864434.index
+2080965981.index
+3391551264.index
+3608047696.index
+844163290.index
+2167202000.index
+3438045466.index
+3543175444.index
+1544397291.index
+1278782549.index
+3599811297.index
+1063244324.index
+2482640707.index
+3665219647.index
+1492766893.index
